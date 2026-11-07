@@ -1,55 +1,30 @@
-Deltanium is a blockchain network that stores transactions, uses D coin as its internal currency, and stores files, media, and content such as posts, images, videos, and livestreams (collectively called content or files) on the Deltanium social network. The network includes the following node types:
+Deltanium là một mạng blockchain, lưu trữ các giao dịch, sử dụng D coin làm giao dịch nội bộ trong mạng, cho phép lưu trữ file, media, các content như bài viết, ảnh, video, livestream…. (sau đây sẽ gọi chung là content hoặc file) trên mạng xã hội Deltanium gồm các node với type sau:
+Node block creator, xử lý các giao dịch, add vào blockchain, có cặp khoá Public, Private Key riêng
+Node người dùng, có cặp khoá Public, Private Key riêng, gửi các request tới mạng blockchain, như upload file, tạo content, thực hiện các action lên content như like, love, donate; hoặc chuyển tiền cho user khác
+Node content store: node này lưu các content, file, ảnh, video….; node này cũng có cặp khoá để khi gửi về cho User, cần khoá để xác thực file gửi về được lưu trên node đó
+Node thanh tra: thanh tra và kiểm tra lại các block, nếu block vi phạm hoặc không hợp lệ sẽ lập tức bị phạt coin và đánh dấu là không hợp lệ trên mạng blockchain
+Node router sẽ quyết định chi phối việc gửi, tải file, quyết định xem file sẽ được lưu ở node content store nào; hay file sẽ được tải về từ node nào
+Hoạt động như sau:
+Người dùng có thể upload file, tạo content, gửi lên mạng blockchain, khi tạo sẽ ký vào để chứng thực file là của user đó
+Người dùng có thể chia sẻ cho một số người khác, hoặc một nhóm cụ thể; hoặc có thể để content/file đó public, tức là toàn mạng có thể xem được
+Chỉ người dùng đó được sửa và cập nhật file/content, khi sửa, cập nhật, sẽ ký lại content và hệ thống blockchain tự động nâng version cho content file đó.
+Các file được gửi lên blockchain sẽ được phân tán, lưu ở một số node lưu content; khi người dùng gửi request view file, content đó sẽ được ký và gửi về cho người dùng; do có nhiều node cùng lưu file, nên hệ thống có thể chọn ngẫu nhiên node có thể gửi về; hoặc chọn theo cơ chế chỉ định node cụ thể (có thể là node primary) để gửi file về cho người dùng; hoặc chọn node theo hình thức xem node nào đang available max và có thể trả về file cho người dùng nhanh nhất;
+Khi người dùng gửi content lên mạng, ngoài việc trả phí tạo transaction cho các node block creator, còn phải trả phần lớn phí cho các node lưu content
+Khi người dùng like, love, donate cho content; thì chủ sở hữu của content đó cũng sẽ được phí và tiền donate, chuyển từ người dùng; các node block creator cũng sẽ được phí tạo block
+Người dùng có thể chia sẻ file/content cho một số người hoặc một số nhóm; file lưu trên node content phải được mã hoá, mà bản thân node đó cũng không đọc được; chỉ có chủ sở hữu và những người dùng được chia sẻ có thể xem
+Người dùng chủ sở hữu có thể cập nhật, hoặc xoá cotent trên blockchain, mỗi lần cập nhật sẽ nâng version; cũng có thể xoá quyền truy cập của các người dùng khác
+Cơ chế đồng thuận:
+Một node trung tâm, node này sẽ quản lý và chỉ định các node; truy cập qua tên miền deltanium.com; một node được phép tạo block hoặc được phép lưu content nếu đã được node trung tâm này xác thực và ký vào gửi lên mạng blockchain
+Khi có một giao dịch phát sinh, như chuyển tiền, like, love, donate…. Giao dịch này sẽ được phân tán tới toàn bộ node block creator, đồng thời được gửi về trung tâm; trung tâm sẽ quyết định node nào được tạo block và ký vào quyết định của mình; node được chọn sẽ thực hiện việc tạo block, đẩy block mới vào mạng; các node block creator phải đặt cọc số tiền nhất định cho hệ thống; trong vòng giới hạn thời gian nào đó; chưa có block được tạo mới, thì số tiền này sẽ bị mất
+Các block được tạo mới sẽ được validate bởi toàn bộ các node block creator khác; tiên quyết là block đó phải được tạo bởi node mà trung tâm đã ký quyết định cho tạo block; tiếp đến block đó phải hợp lệ; tức là toàn bộ giao dịch trong block đó hợp lệ; thì block đó sẽ được add vào blockchain local của node đó, đồng thời node validate sẽ gửi một tín hiệu tới toàn mạng là nó đã chấp nhận block đó; hoặc không nó sẽ gửi tín hiệu không công nhận node này về trung tâm và về các node thanh tra
+Node thanh tra cũng nhận được khối block tạo mới; nó sẽ chờ tất cả các node block creator xác nhận block hợp lệ; nếu có một vài phản hồi không hợp lệ cho block này; nó sẽ chạy lại quy trình validate block; nếu không hợp lệ nó sẽ gửi yêu cầu huỷ block và ký vào yêu cầu này; trong trường hợp hợp lệ, nó sẽ không làm gì cả; thi thoảng nó cũng chạy ngẫu nhiên việc thanh kiểm tra block kể cả khi toàn bộ node block creator gửi về phản hồi block hợp lệ
+Trong khoảng thời gian nhất định kể từ lúc trung tâm gửi yêu cầu tạo block tới node block creator được chọn; nhưng node được chọn tạo block chậm hơn so với thời gian yêu cầu; thì trung tâm sẽ huỷ lệnh đó và gửi một lệnh khác; đồng thời chọn một node khác để tạo block; đồng thời phạt node kia một số coin nhất định
+Về việc chọn node content store:
+Khi một yêu cầu lưu file gửi tới mạng blockchain, bản thân node người dùng cần chia nhỏ file thành các khối, và mã hoá các khối đó trước theo một khoá ngẫu nhiên nào đó, gọi là encrypted content, mã khoá khoá ngẫu nhiên đó theo từng khoá public của user hoặc nhóm mà muốn chia sẻ file cho họ; đồng thời tạo mã băm khối dựa trên version, người tạo, thời gian tạo và content của encrypted content, mã băm của khối trước đó, mã băm của khối sau nó, để sinh ra một unique content id cho khối file; tạo một file id là merkle-tree băm của toàn bộ unique content id của file đó, đóng gói lại gửi tới một hoặc vài node router nhất định
+Node user sẽ gửi yêu cầu tải file lên mạng, ký vào, các node content store nào đáp ứng được sẽ ký vào yêu cầu tải đó và gửi về node user xác định là nó chấp thuận cho upload file, nếu node user nếu đồng ý thì ghi đồng ý, và ký lại lần nữa, vì trong nhiều trường hợp, node user sẽ từ chối một số node content lưu nội dung cuả nó. Sau đó nó sẽ gửi các khối tin (là chia nhỏ của file), đã ký, đã băm mã khối, cho các node content, có thể gửi trực tiếp hoặc gửi qua các node shipper, node shipper này sẽ xác nhận các khối file hợp lệ, xác nhận việc đã nhận của node content và đã gửi cho node content
 
-Block creator nodes process transactions, add them to the blockchain, and have their own public/private key pair.
-
-User nodes have their own public/private key pair and send requests to the blockchain network, such as uploading files, creating content, performing actions on content (like, love, donate), or transferring coins to other users.
-
-Content store nodes store content, files, images, videos, and similar data. They also have a key pair used to authenticate that a file returned to a user was stored on that node.
-
-Inspector nodes audit and re-check blocks. If a block is violating or invalid, it is immediately penalized in coin and marked invalid on the blockchain.
-
-Router nodes control file send and download routing: which content store node will store a file, and which node a file will be downloaded from.
-
-Operation:
-
-Users can upload files, create content, and submit it to the blockchain. On creation they sign the content to prove ownership.
-
-Users can share content with specific people or a group, or make it public so the whole network can view it.
-
-Only the owner may edit and update a file or content. On update they re-sign the content, and the blockchain automatically increments the content version.
-
-Files submitted to the blockchain are distributed across several content store nodes. When a user requests to view a file, the content is signed and returned. Because multiple nodes store the same file, the system may choose a node at random, designate a specific node (for example a primary node), or pick the node that is most available and can return the file fastest.
-
-When a user submits content, besides paying a transaction fee to block creator nodes, they pay most of the fee to content store nodes.
-
-When a user likes, loves, or donates to content, the content owner receives a fee and any donation from that user. Block creator nodes also receive a block-creation fee.
-
-Users can share files or content with selected users or groups. Files stored on content nodes must be encrypted so that the storing node itself cannot read them. Only the owner and users who were granted access can view the content.
-
-The owner can update or delete content on the blockchain. Each update increments the version. The owner can also revoke access for other users.
-
-Consensus:
-
-A central node manages and designates other nodes, accessed via deltanium.com. A node may create blocks or store content only after this central node has authenticated it and signed that authorization onto the blockchain.
-
-When a transaction occurs (transfer, like, love, donate, and so on), it is distributed to all block creator nodes and also sent to the center. The center decides which node may create the next block and signs that decision. The selected node creates the block and publishes it. Block creator nodes must stake a deposit; if no new block is created within a time limit, that stake is forfeited.
-
-Newly created blocks are validated by all other block creator nodes. First, the block must have been created by the node the center authorized. Second, the block must be valid: every transaction in it must be valid. If so, the validating node adds the block to its local chain and signals acceptance to the network. Otherwise it reports rejection to the center and to inspector nodes.
-
-Inspector nodes also receive the new block. They wait for all block creator confirmations. If some replies mark the block invalid, the inspector re-runs validation. If invalid, it sends a signed cancellation request. If valid, it does nothing. Periodically it also randomly audits blocks even when every block creator reported the block as valid.
-
-If the selected block creator is slower than the time allowed after the center issued the create-block request, the center cancels that order, sends a new one to a different node, and penalizes the late node a set amount of coin.
-
-Content store node selection:
-
-When a file storage request reaches the network, the user node splits the file into chunks and encrypts those chunks with a random key (encrypted content). That random key is then encrypted to each public key of the users or groups the file is shared with. The node also hashes each chunk from version, creator, creation time, encrypted content, previous-chunk hash, and next-chunk hash to produce a unique content id. A file id is the Merkle-tree hash of all unique content ids. The package is sent to one or more router nodes.
-
-The user node signs an upload request. Content store nodes that can accept it sign the request and return it. If the user agrees, they record that agreement and sign again, because they may refuse some content nodes. The user then sends the signed, hashed chunks to those content nodes, either directly or via shipper nodes. Shipper nodes confirm that chunks are valid, that they were received from the user, and that they were delivered to the content node.
-
-For downloads, the user node sends a signed download request. Content nodes that can serve the file sign the request. If the user agrees to download from that node, they record agreement and sign. The user then receives chunks from the content node directly or via a shipper.
-
-Shipper nodes must log send and receive activity for two months, which inspectors may need during investigations.
-
-To speed transfers, P2P direct transfer with content store nodes may be used. Depending on bandwidth and transfer speed, the receiving user node chooses which content node to fetch each file or chunk from.
-
-To prove the user received the content, the content node re-encrypts the chunk with a random key (re-encrypted content) and sends both that key and the re-encrypted content to the inspector. The inspector hashes the re-encrypted content together with the random key. The content node sends only the re-encrypted content to the user first. After the user agrees, signs, and publishes that on the blockchain, the content node sends the random key to the user. Keys sent to the inspector or the user are encrypted to that node's public key first, so only the intended recipient can decrypt them. All of these transactions are recorded on the blockchain for transparency.
+> **Trạng thái MVP hiện tại (không thay thế tầm nhìn trên):** Router/shipper/DHT chưa có. App chọn **N-of-M full replicas** từ `GET /api/storenode/list` (`REPLICATION_FACTOR`, mặc định 2), upload cùng `fileId` lên N Store node, rồi Central API index qua `POST /api/storedfile/register-replicas` (request có chữ ký). Chi tiết: `deltanium-app/ARCHITECT.MD` §3.2.1.
+Khi có yêu cầu tải file từ node user, node user sẽ gửi yêu cầu tải file lên mạng blockchain, yêu cầu này cần phải ký vào, các node content có khả năng gửi file sẽ ký vào yêu cầu tải này để xác nhận đồng ý cho tải file, node user nếu đồng ý tải file từ node content đó thì sẽ ghi đồng ý, ký vào; sau đó node user có thể nhận các khối từ node content trực tiếp hoặc nhận qua node shipper
+Các node shipper phải có chức năng ghi lại log quá trình gửi và nhận trong vòng 2 tháng; cần thiết trong trường hợp các node thanh tra xử lý
+Để tăng tốc truyền nhận có thể áp dụng cơ chế P2P truyền nhận trực tiếp với các node content store, tuỳ thuộc vào dung lượng mạng, tốc độ truyền tải, sẽ do node user mong muốn nhận file (hoặc khối file) từ node content nào
+Để chắc chắn rằng node user đã nhận được content, node content sẽ mã hoá khối gửi về cho node user bằng một mã khoá ngẫu nhiên, gọi là re-encrypted content, gửi mã khoá ngẫu nhiên này và cả re-encrypted content cho node thanh tra, node thanh tra sẽ băm re-encrypted content, kết hợp khoá ngẫu nhiên, để nhận về một mã băm. Về phía node user, node content chỉ gửi re-encrypted content, nếu node user đồng ý nhận, ký vào, gửi lên blockchain, thì lúc này node content mới gửi tiếp mã khoá ngẫu nhiên cho node user; việc gửi mã khoá ngẫu nhiên cho node thanh tra hoặc node user thì node content cần mã hoá khoá đó bằng pubkey của node thanh tra và node user trước, để đảm bảo chỉ các node cần nhận mới giải mã được, tất cả các giao dịch gửi lên blockchain để đảm bảo minh bạch
