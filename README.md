@@ -173,8 +173,6 @@ Artifacts (per platform):
 - Linux: `libumbral_pre.so`
 - Windows: `umbral_pre.dll`
 
-The historical .NET PRE CLI lived in [deltanium-user](https://github.com/dlvstudio/deltanium-user) (**archived**; superseded by `deltanium-app`).
-
 ## System Architecture
 
 ### Layered Architecture
