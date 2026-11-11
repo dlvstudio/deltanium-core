@@ -157,15 +157,15 @@ Option A (recommended, submodule):
 cd deltanium-core
 git submodule update --init --recursive
 chmod +x scripts/build_umbral_pre.sh
-# Copy artifact to a target directory (e.g., deltanium-user bin)
-scripts/build_umbral_pre.sh Release ../deltanium-user/bin/Release/net7.0
+# Copy artifact next to any host that loads the native PRE library
+scripts/build_umbral_pre.sh Release ./artifacts
 ```
 
 Option B (script-managed vendor clone):
 ```bash
 cd deltanium-core
 chmod +x scripts/build_umbral_pre.sh
-scripts/build_umbral_pre.sh Release ../deltanium-user/bin/Release/net7.0
+scripts/build_umbral_pre.sh Release ./artifacts
 ```
 
 Artifacts (per platform):
@@ -173,14 +173,7 @@ Artifacts (per platform):
 - Linux: `libumbral_pre.so`
 - Windows: `umbral_pre.dll`
 
-#### Run the PRE demo (from deltanium-user)
-
-After placing the native library next to the user app output, run:
-```bash
-cd ../deltanium-user
-dotnet run -c Release -- pre
-```
-Expected output includes `Decapsulated K matches: True` and the decrypted content.
+The historical .NET PRE CLI lived in [deltanium-user](https://github.com/dlvstudio/deltanium-user) (**archived**; superseded by `deltanium-app`).
 
 ## System Architecture
 
