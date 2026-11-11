@@ -332,4 +332,8 @@ Expected output includes `Decapsulated K matches: True` and the decrypted conten
 ### Phase 5: User Applications
 - Develop end-user applications
 - Integrate social features
-- Complete ecosystem 
+- Complete ecosystem
+
+## License
+
+MIT — see [LICENSE](LICENSE). 
