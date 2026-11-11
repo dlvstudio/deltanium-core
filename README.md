@@ -1,5 +1,17 @@
 # Deltanium Blockchain Network
 
+## Production
+
+| Service | URL |
+|---------|-----|
+| Landing | [https://deltanium.com](https://deltanium.com) |
+| App | [https://app.deltanium.com](https://app.deltanium.com) |
+| Central API | [https://api.deltanium.com](https://api.deltanium.com) |
+| Store nodes | [store-1](https://store-1.deltanium.com) · [store-2](https://store-2.deltanium.com) |
+| Block creator | [https://blocker-1.deltanium.com](https://blocker-1.deltanium.com) |
+
+This library is the shared crypto / PRE core used by those services; it has no public HTTP endpoint of its own.
+
 ## Overview
 Deltanium is a blockchain network that facilitates transactions using D coin as its native currency. The network enables storage of various types of content including files, media, articles, images, videos, and livestreams on a decentralized social network infrastructure.
 
